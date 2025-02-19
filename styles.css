@@ -1,0 +1,64 @@
+@import "tailwindcss";
+
+.code-helper-btn {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    padding: 10px 20px !important;
+    font-size: 16px !important;
+    font-weight: bold !important;
+    cursor: pointer !important;
+    border: 3px solid #000000 !important;
+    box-shadow: 0px 0px 0px #000000 !important;
+    font-family: "Courier New", monospace !important;
+    text-transform: uppercase !important;
+    margin: 10px 0 !important;
+    transition: all 0.2s ease-in-out !important;
+    display: inline-block !important;
+    border-radius: 5px !important;
+    position: relative !important;
+}
+
+.code-helper-btn:hover {
+    box-shadow: 3px 3px 0px #000000 !important;
+    /* background-color: #333333 !important;
+    color: #ffffff !important; */
+}
+
+.code-helper-btn:active {
+    box-shadow: 0px 0px 0px #000000 !important;
+    background-color: #e7e7e7 !important;
+}
+
+.code-helper-btn:disabled {
+    background-color: #666666 !important;
+    border-color: #666666 !important;
+    box-shadow: 5px 5px 0px #666666 !important;
+    cursor: not-allowed !important;
+    opacity: 0.6 !important;
+}
+
+.code-helper-container {
+    margin-top: 10px !important;
+    padding: 10px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+}
+
+.code-helper-explanation {
+    margin-top: 20px !important;
+    padding: 24px !important;
+    background-color: #f9f9f9 !important;
+    border: 3px solid #000000 !important;
+    box-shadow: 3px 3px 0px #000000 !important;
+    font-family: "Courier New", monospace !important;
+    font-size: 14px !important;
+    line-height: 1.8 !important;
+    color: #222222 !important;
+    white-space: pre-wrap !important;
+    border-radius: 5px !important;
+    max-width: 80% !important;
+    text-align: left !important;
+}
