@@ -35,8 +35,12 @@ async def explain_code(request: CodeRequest):
             input_variables=['code', 'history'],
             template=(
                 "If the following code depends on any previously defined code, consider that context while explaining. "
-                "Explain the given code line by line, ignoring lines that do not affect execution. Keep the explanations concise and to the point. "
+                "Breakdown the given code and explain it line by line, ignoring comments and lines that do not affect execution. Keep the explanations concise and to the point. "
+                "Ignore the language name inside the code block.\n"
+                "Start with Breakdown of code subheading.\n"
+                "At the end give a summary no more than two lines with a subheading \"Summary\".\n"
                 "Focus on clarity and readability.\n\n"
+                "Make sure there is good space between the breakdown and the summary.\n\n"
                 "Previously Defined Code:\n{history}\n\n"
                 "Current Code:\n{code}"
                 )

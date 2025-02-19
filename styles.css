@@ -8,43 +8,43 @@
     font-weight: bold !important;
     cursor: pointer !important;
     border: 3px solid #000000 !important;
-    box-shadow: 0px 0px 0px #000000 !important;
     font-family: "Courier New", monospace !important;
     text-transform: uppercase !important;
-    margin: 10px 0 !important;
     transition: all 0.2s ease-in-out !important;
     display: inline-block !important;
     border-radius: 5px !important;
     position: relative !important;
+    width: max-content !important;
 }
 
 .code-helper-btn:hover {
-    box-shadow: 3px 3px 0px #000000 !important;
-    /* background-color: #333333 !important;
-    color: #ffffff !important; */
+    background-color: #d8d8d8 !important; 
+    color: #000000;
 }
 
 .code-helper-btn:active {
-    box-shadow: 0px 0px 0px #000000 !important;
     background-color: #e7e7e7 !important;
+    color: #000000;
 }
 
 .code-helper-btn:disabled {
     background-color: #666666 !important;
     border-color: #666666 !important;
-    box-shadow: 5px 5px 0px #666666 !important;
     cursor: not-allowed !important;
     opacity: 0.6 !important;
 }
 
 .code-helper-container {
     margin-top: 10px !important;
-    padding: 10px !important;
+    margin-bottom: 10px !important;
+    padding: 10px 10px 10px 10px !important;
     width: 100% !important;
     box-sizing: border-box !important;
     display: flex !important;
     flex-direction: column !important;
-    align-items: center !important;
+    align-items: left !important;
+    border: 2px solid #000000 !important;
+    background-color: #ffffff !important;
 }
 
 .code-helper-explanation {
@@ -52,13 +52,24 @@
     padding: 24px !important;
     background-color: #f9f9f9 !important;
     border: 3px solid #000000 !important;
-    box-shadow: 3px 3px 0px #000000 !important;
-    font-family: "Courier New", monospace !important;
-    font-size: 14px !important;
+    font-family: "Verdana", sans-serif !important;
+    font-size: 10px !important;
     line-height: 1.8 !important;
-    color: #222222 !important;
+    color: #000000 !important;
     white-space: pre-wrap !important;
     border-radius: 5px !important;
-    max-width: 80% !important;
+    max-width: 100% !important;
     text-align: left !important;
+}
+
+.code-helper-explanation code.inline-code {
+    background-color: #f5f5f5;
+    color: #333;
+    font-family: "Courier New", monospace;
+    font-size: 0.9em;
+    padding: 2px 4px;
+    border-radius: 4px;
+    margin: 0;
+    display: inline;
+    white-space: pre-wrap;
 }

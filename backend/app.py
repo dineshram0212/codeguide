@@ -23,7 +23,7 @@ explain_code_template = PromptTemplate(
     input_variables=['code'],
     template=(
         "If the following code depends on any previously defined code, consider that context while explaining. "
-        "Explain the given code line by line, ignoring lines that do not affect execution. Keep the explanations concise and to the point. "
+        "Breakdown the give code, ignoring lines that do not affect execution. Keep the explanations concise and to the point. "
         "Focus on clarity and readability.\n\n"
         "Previously Defined Code:\n{history}\n\n"
         "Current Code:\n{code}"

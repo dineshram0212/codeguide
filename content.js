@@ -1,14 +1,41 @@
+function formatExplanation(text) {
+    // Replace headings
+    text = text.replace(/^### (.*?)$/gm, "<h3>$1</h3>");
+    text = text.replace(/^## (.*?)$/gm, "<h2>$1</h2>");
+    
+    // Handle paragraphs and line breaks
+    text = text.replace(/\n\n/g, "</p><p>");
+    text = text.replace(/\n/g, "<br>");
+    
+    // Simple inline code formatting
+    text = text.replace(/`(.*?)`/g, '<code class="inline-code">$1</code>');
+    
+    // Bold text
+    text = text.replace(/\*\*(.*?)\*\*/g, "<b>$1</b>");
+    
+    return `<p>${text}</p>`;
+}
+
+
 // content.js
 function addExplainButtons() {
-  const codeBlocks = document.querySelectorAll("pre code");
+  //   const codeBlocks = document.querySelectorAll("pre code");
+  const codeBlocks = document.querySelectorAll(
+    "pre code:not(.code-helper-explanation code)"
+  );
 
   codeBlocks.forEach((codeBlock) => {
-    const container = codeBlock.parentElement;
+    const preContainer = codeBlock.closest("pre"); 
 
-    // Skip if button already exists
-    if (container.querySelector(".code-helper-btn")) {
-      return;
-    }
+    if (preContainer.nextElementSibling?.classList.contains("code-helper-container")) {
+        return;
+      }
+    // const container = codeBlock.parentElement;
+
+    // // Skip if button already exists
+    // if (container.querySelector(".code-helper-btn") || container.closest(".code-helper-explanation")) {
+    //   return;
+    // }
 
     // Create button container
     const buttonContainer = document.createElement("div");
@@ -22,7 +49,7 @@ function addExplainButtons() {
     buttonContainer.appendChild(button);
 
     // Add container after the code block
-    codeBlock.parentNode.insertBefore(buttonContainer, codeBlock.nextSibling);
+    preContainer.parentNode.insertBefore(buttonContainer, codeBlock.nextSibling);
 
     button.addEventListener("click", async () => {
       const code = codeBlock.textContent;
@@ -52,7 +79,6 @@ function addExplainButtons() {
         });
 
         const data = await response.json();
-        console.log(data)
 
         // Remove existing explanation if it exists
         const existingExplanation = buttonContainer.querySelector(
@@ -65,7 +91,7 @@ function addExplainButtons() {
         // Create new explanation
         const explanation = document.createElement("div");
         explanation.className = "code-helper-explanation";
-        explanation.textContent = data.explanation;
+        explanation.innerHTML = formatExplanation(data.explanation);
 
         buttonContainer.appendChild(explanation);
       } catch (error) {
