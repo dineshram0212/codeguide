@@ -3,7 +3,7 @@
   "name": "codeGuide",
   "version": "1.0",
   "description": "Explains code using LLM models",
-  "permissions": ["activeTab", "storage", "nativeMessaging"],
+  "permissions": ["activeTab", "storage"],
   "action": {
     "default_popup": "popup.html",
     "default_icon": {
