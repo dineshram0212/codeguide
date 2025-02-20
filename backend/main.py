@@ -1,4 +1,6 @@
 import re
+import uvicorn
+import threading
 
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
@@ -89,6 +91,19 @@ async def explain_code(request: CodeRequest):
 
 @app.post("/clear_memory")
 async def clear_memory(tab_id: str):
-    """Clears memory for a specific tab."""
     memory_store.pop(tab_id, None)
     return {"message": f"Memory cleared for tab {tab_id}"}
+
+
+def start_server():
+    uvicorn.run(app, host="127.0.0.1", port=8000)
+
+if __name__ == "__main__":
+    server_thread = threading.Thread(target=start_server, daemon=True)
+    server_thread.start()
+
+    while True:
+        try:
+            message = input()  
+        except EOFError:
+            break

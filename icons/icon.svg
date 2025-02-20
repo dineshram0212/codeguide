@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
+    <!-- Book Background (Beige) -->
+    <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20" fill="#F5F5DC" stroke="#2d5a4c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Book Arrow -->
+    <path d="M9 7l3 3-3 3" stroke="#2d5a4c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Book Line -->
+    <path d="M14 13h3" stroke="#2d5a4c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
