@@ -3,11 +3,14 @@ import re
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
+from typing import Dict
+
 from langchain_groq import ChatGroq
 from langchain_openai import ChatOpenAI
 from langchain_anthropic import ChatAnthropic
 from langchain.prompts import PromptTemplate
 
+from langchain.memory import ConversationBufferMemory
 
 app = FastAPI()
 
@@ -24,6 +27,7 @@ class CodeRequest(BaseModel):
     code: str
     model: str
     api_key: str
+    tab_id: str
 
 
 LLM_CLASSES = {
@@ -46,17 +50,23 @@ prompt = PromptTemplate(
             "Since the markdown is formatted to HTML, make sure you avoid using unwanted markdown which might affect the final response.\n\n"
             "Only respond in English and avoid language that start from right to left.\n\n"
             "Make sure there is good space between the breakdown and the summary.\n\n"
-            "Previously Defined Code:\n{history}\n\n"
+            "Previously defined code:\n{history}\n\n"
             "Current Code:\n{code}"
             )
         )
 
 
+memory_store: Dict[str, ConversationBufferMemory] = {}
 
 
 @app.post("/explain")
 async def explain_code(request: CodeRequest):
     try:
+        if request.tab_id not in memory_store:
+            memory_store[request.tab_id] = ConversationBufferMemory(return_messages=False)
+
+        memory = memory_store[request.tab_id]
+
         if request.model not in LLM_CLASSES:
             raise HTTPException(status_code=400, detail="Unsupported model selected")
         
@@ -64,16 +74,21 @@ async def explain_code(request: CodeRequest):
         
         llm = llm_class(temperature=0.6, model=request.model, api_key=request.api_key)
 
-        llm_chain = prompt | llm
+        llm_chain = prompt | llm 
 
-        history = ''
         if request.code:
-            response = llm_chain.invoke({"code":request.code, "history":history}) 
+            response = llm_chain.invoke({"code":request.code, "history":memory.load_memory_variables({}).get("history", "")}) 
             response = re.sub(r"<think>.*?</think>", "", response.content, flags=re.DOTALL).strip()
-
-            
+            memory.save_context({"input":request.code}, {"output":response})
 
         return {"explanation": response}
                 
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.post("/clear_memory")
+async def clear_memory(tab_id: str):
+    """Clears memory for a specific tab."""
+    memory_store.pop(tab_id, None)
+    return {"message": f"Memory cleared for tab {tab_id}"}
