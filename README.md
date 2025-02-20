@@ -72,20 +72,6 @@ If you prefer setting up the backend yourself:
 
 ---
 
-## 🚀 Deployment Guide (For Hosting on Render)
-If you want to make the backend **publicly accessible**, you can **deploy it on Render**.
-
-1. **Push your backend to GitHub**
-2. **Go to [Render](https://render.com) → New Web Service**
-3. **Connect your GitHub repo**
-4. **Set the Start Command:**
-   ```bash
-   uvicorn main:app --host 0.0.0.0 --port $PORT
-   ```
-5. **Deploy & get a public API URL**, then update your Chrome extension to use this URL.
-
----
-
 ## 🔑 API Key Configuration
 To use LLMs like **OpenAI**, **Groq**, or **Anthropic**, you need an API key.
 
@@ -103,8 +89,8 @@ This project is licensed under the **MIT License**.
 
 ## 📧 Contact
 - **GitHub:** [dineshram0212](https://github.com/dineshram0212)
-- **Email:** [your-email@example.com]
-- **Website:** [your-website.com]
+- **Email:** [dineshramdsml@gmail.com]
+- **Website:** [https://dineshram.vercel.app/](https://dineshram.vercel.app/)
 
 ---
 
