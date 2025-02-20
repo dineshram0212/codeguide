@@ -1,3 +1,4 @@
+import os
 import re
 import uvicorn
 import threading
@@ -60,6 +61,9 @@ prompt = PromptTemplate(
 
 memory_store: Dict[str, ConversationBufferMemory] = {}
 
+@app.get("/")
+def read_root():
+    return {"message": "FastAPI running on Render!"}
 
 @app.post("/explain")
 async def explain_code(request: CodeRequest):
@@ -96,7 +100,9 @@ async def clear_memory(tab_id: str):
 
 
 def start_server():
-    uvicorn.run(app, host="127.0.0.1", port=8000)
+    port = int(os.getenv("PORT", 8000))  # Default to 8000 if no PORT is set
+    uvicorn.run(app, host="0.0.0.0", port=port)
+
 
 if __name__ == "__main__":
     server_thread = threading.Thread(target=start_server, daemon=True)
