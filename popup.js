@@ -8,9 +8,9 @@ document.getElementById('saveButton').addEventListener('click', () => {
     }, () => {
       const status = document.createElement('div');
       status.textContent = 'Settings saved!';
-      status.className = 'mt-2 text-sm text-green-600';
+      status.classList.add('status-message'); 
       document.body.appendChild(status);
-      setTimeout(() => status.remove(), 2000);
+      setTimeout(() => status.remove(), 1500);
     });
   });
   

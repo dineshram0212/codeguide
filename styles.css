@@ -1,8 +1,9 @@
 .code-helper-btn {
     background-color: #f4f1de !important;
     color: #3d405b !important;
+    margin: 10px 10px;
     padding: 10px 14px !important;
-    font-size: 15px !important;
+    font-size: 12px !important;
     font-weight: 500 !important;
     cursor: pointer !important;
     border: 2px solid #81b29a !important;
@@ -36,7 +37,7 @@
 
 .code-helper-container {
     margin: 16px 0 !important;
-    padding: 14px !important;
+    /* padding: 14px !important; */
     width: 100% !important;
     box-sizing: border-box !important;
     display: flex !important;
@@ -46,32 +47,61 @@
     background-color: #fdfcf7 !important;
     border-radius: 12px !important;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05) !important;
+    overflow: hidden;
 }
 
 .code-helper-explanation {
-    margin-top: 24px !important;
+    /* margin-top: 24px !important; */
     padding: 20px !important;
-    background-color: #f4f1de !important;
+    background-color: #fffcf0 !important;
     font-family: "Inter", system-ui, sans-serif !important;
     font-size: 15px !important;
     line-height: 1.7 !important;
-    color: #3d405b !important;
+    color: #373a50 !important;
     white-space: pre-wrap !important;
-    border-radius: 8px !important;
+    /* border-radius: 8px !important; */
     max-width: 100% !important;
     text-align: left !important;
-    border: 1px solid rgba(129, 178, 154, 0.2) !important;
+    border-top: 1px solid rgba(129, 178, 154, 0.2) !important;
 }
 
 .code-helper-explanation code.inline-code {
     background-color: rgba(129, 178, 154, 0.1) !important;
-    color: #3d405b !important;
+    color: #35384d !important;
+    /* font-family: "Inter", system-ui, sans-serif !important; */
     font-family: "Menlo", "Monaco", "Courier New", monospace !important;
-    font-size: 14px !important;
+    font-size: 15px !important;
     padding: 2px 6px !important;
     border-radius: 4px !important;
     margin: 0 !important;
     display: inline !important;
     white-space: pre-wrap !important;
     border: 1px solid rgba(129, 178, 154, 0.2) !important;
+}
+
+.code-helper-toggle-btn {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 32px !important;
+    height: 32px !important;
+    padding: 4px !important;
+    border: none !important;
+    background-color: transparent !important;
+    cursor: pointer !important;
+    transition: transform 0.3s ease !important;
+    color: #81b29a !important;
+}
+
+.code-helper-toggle-btn:hover {
+    color: #6b9580 !important;
+}
+
+.code-helper-toggle-btn svg {
+    width: 20px !important;
+    height: 20px !important;
+}
+
+.code-helper-container {
+    position: relative !important;
 }

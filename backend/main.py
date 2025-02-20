@@ -4,7 +4,8 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from langchain_groq import ChatGroq
-from langchain.chains import LLMChain
+from langchain_openai import ChatOpenAI
+from langchain_anthropic import ChatAnthropic
 from langchain.prompts import PromptTemplate
 
 
@@ -25,29 +26,44 @@ class CodeRequest(BaseModel):
     api_key: str
 
 
+LLM_CLASSES = {
+    "deepseek-r1-distill-llama-70b": ChatGroq,
+    "gpt-4": ChatOpenAI,
+    "gpt-3.5-turbo": ChatOpenAI,
+    "claude-3-haiku": ChatAnthropic,
+    "claude-3-sonnet": ChatAnthropic,
+}
+
+
+prompt = PromptTemplate(
+        input_variables=['code', 'history'],
+        template=(
+            "If the following code depends on any previously defined code, consider that context while explaining. "
+            "Breakdown the given code and explain it line by line, ignoring comments and lines that do not affect execution. Keep the explanations concise and to the point. "
+            "Ignore the language name inside the code block.\n"
+            "Start with Breakdown of code subheading.\n"
+            "At the end give a summary no more than two lines with a subheading \"Summary\".\n"
+            "Since the markdown is formatted to HTML, make sure you avoid using unwanted markdown which might affect the final response.\n\n"
+            "Only respond in English and avoid language that start from right to left.\n\n"
+            "Make sure there is good space between the breakdown and the summary.\n\n"
+            "Previously Defined Code:\n{history}\n\n"
+            "Current Code:\n{code}"
+            )
+        )
+
 
 
 
 @app.post("/explain")
 async def explain_code(request: CodeRequest):
     try:
-        prompt = PromptTemplate(
-            input_variables=['code', 'history'],
-            template=(
-                "If the following code depends on any previously defined code, consider that context while explaining. "
-                "Breakdown the given code and explain it line by line, ignoring comments and lines that do not affect execution. Keep the explanations concise and to the point. "
-                "Ignore the language name inside the code block.\n"
-                "Start with Breakdown of code subheading.\n"
-                "At the end give a summary no more than two lines with a subheading \"Summary\".\n"
-                "Since the markdown is formatted to HTML, make sure you avoid using unwanted markdown which might affect the final response.\n\n"
-                "Only respond in English and avoid language that start from right to left.\n\n"
-                "Make sure there is good space between the breakdown and the summary.\n\n"
-                "Previously Defined Code:\n{history}\n\n"
-                "Current Code:\n{code}"
-                )
-            )
+        if request.model not in LLM_CLASSES:
+            raise HTTPException(status_code=400, detail="Unsupported model selected")
         
-        llm = ChatGroq(temperature=0.6, model='deepseek-r1-distill-qwen-32b', groq_api_key=request.api_key)
+        llm_class = LLM_CLASSES[request.model]
+        
+        llm = llm_class(temperature=0.6, model=request.model, api_key=request.api_key)
+
         llm_chain = prompt | llm
 
         history = ''

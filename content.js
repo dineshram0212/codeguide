@@ -1,99 +1,128 @@
 function formatExplanation(text) {
-    // Replace headings
-    text = text.replace(/^### (.*?)$/gm, "<h3>$1</h3>");
-    text = text.replace(/^## (.*?)$/gm, "<h2>$1</h2>");
-    
-    // Handle paragraphs and line breaks
-    text = text.replace(/\n\n/g, "</p><p>");
-    text = text.replace(/\n/g, "<br>");
-    
-    // Simple inline code formatting
-    text = text.replace(/`(.*?)`/g, '<code class="inline-code">$1</code>');
-    
-    // Bold text
-    text = text.replace(/\*\*(.*?)\*\*/g, "<b>$1</b>");
-    
-    return `<p>${text}</p>`;
+  // Replace headings
+  text = text.replace(/^### (.*?)$/gm, "<h3>$1</h3>");
+  text = text.replace(/^## (.*?)$/gm, "<h2>$1</h2>");
+  
+  // Handle paragraphs and line breaks
+  text = text.replace(/\n\n/g, "</p><p>");
+  text = text.replace(/\n/g, "<br>");
+  
+  // Simple inline code formatting
+  text = text.replace(/`(.*?)`/g, '<code class="inline-code">$1</code>');
+  
+  // Bold text
+  text = text.replace(/\*\*(.*?)\*\*/g, "<b>$1</b>");
+  
+  return `<p>${text}</p>`;
 }
 
-
 // content.js
-let observedElements = new Set(); // Keep track of processed elements
+let observedElements = new Set();
 
 function addExplainButtons() {
   const codeBlocks = document.querySelectorAll("pre code");
 
   codeBlocks.forEach((codeBlock) => {
-    const preContainer = codeBlock.closest("pre");
+      const preContainer = codeBlock.closest("pre");
 
-    // ✅ Skip if the button was already added
-    if (!preContainer || observedElements.has(preContainer)) {
-      return;
-    }
-
-    // ✅ Mark this <pre> as processed
-    observedElements.add(preContainer);
-
-    // Create button container
-    const buttonContainer = document.createElement("div");
-    buttonContainer.className = "code-helper-container";
-
-    // Create button
-    const button = document.createElement("button");
-    button.textContent = "Explain Code";
-    button.className = "code-helper-btn";
-    buttonContainer.appendChild(button);
-
-    // ✅ Place button *below* the <pre> block
-    preContainer.parentNode.insertBefore(buttonContainer, preContainer.nextSibling);
-
-    button.addEventListener("click", async () => {
-      const code = codeBlock.textContent;
-
-      // Get settings from storage
-      const settings = await chrome.storage.sync.get(["model", "apiKey"]);
-      if (!settings.apiKey) {
-        alert("Please set your API key in the extension popup");
-        return;
+      if (!preContainer || observedElements.has(preContainer)) {
+          return;
       }
 
-      button.disabled = true;
-      button.textContent = "Explaining...";
+      observedElements.add(preContainer);
 
-      try {
-        const response = await fetch("http://localhost:8000/explain", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            code: code,
-            model: settings.model,
-            api_key: settings.apiKey,
-          }),
-        });
+      const buttonContainer = document.createElement("div");
+      buttonContainer.className = "code-helper-container";
 
-        const data = await response.json();
+      const buttonGroup = document.createElement("div");
+      buttonGroup.style.display = "flex";
+      buttonGroup.style.gap = "10px";
+      buttonGroup.style.alignItems = "center";
+      buttonContainer.appendChild(buttonGroup);
 
-        // Remove existing explanation if it exists
-        const existingExplanation = buttonContainer.querySelector(".code-helper-explanation");
-        if (existingExplanation) {
-          existingExplanation.remove();
-        }
+      const explainButton = document.createElement("button");
+      explainButton.textContent = "Explain Code";
+      explainButton.className = "code-helper-btn";
+      buttonGroup.appendChild(explainButton);
 
-        // Create new explanation
-        const explanation = document.createElement("div");
-        explanation.className = "code-helper-explanation";
-        explanation.innerHTML = formatExplanation(data.explanation);
+      // Create toggle button with icon
+      const toggleButton = document.createElement("button");
+      toggleButton.className = "code-helper-toggle-btn";
+      toggleButton.innerHTML = `
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 15l-6-6-6 6"/>
+          </svg>
+      `;
+      toggleButton.style.display = "none";
+      buttonGroup.appendChild(toggleButton);
 
-        buttonContainer.appendChild(explanation);
-      } catch (error) {
-        alert("Error getting explanation. Please check your settings and try again.");
-      } finally {
-        button.disabled = false;
-        button.textContent = "Explain Code";
-      }
-    });
+      preContainer.parentNode.insertBefore(buttonContainer, preContainer.nextSibling);
+
+      explainButton.addEventListener("click", async () => {
+          const code = codeBlock.textContent;
+
+          const settings = await chrome.storage.sync.get(["model", "apiKey"]);
+          if (!settings.apiKey) {
+              alert("Please set your API key in the extension popup");
+              return;
+          }
+
+          explainButton.disabled = true;
+          explainButton.textContent = "Explaining...";
+
+          try {
+              const response = await fetch("http://localhost:8000/explain", {
+                  method: "POST",
+                  headers: {
+                      "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({
+                      code: code,
+                      model: settings.model,
+                      api_key: settings.apiKey,
+                  }),
+              });
+
+              const data = await response.json();
+
+              const existingExplanation = buttonContainer.querySelector(".code-helper-explanation");
+              if (existingExplanation) {
+                  existingExplanation.remove();
+              }
+
+              const explanation = document.createElement("div");
+              explanation.className = "code-helper-explanation";
+              explanation.innerHTML = formatExplanation(data.explanation);
+              buttonContainer.appendChild(explanation);
+
+              // Show toggle button only after explanation is added
+              toggleButton.style.display = "flex";
+              toggleButton.setAttribute('data-expanded', 'true');
+              
+          } catch (error) {
+              alert("Error getting explanation. Please check your settings and try again.");
+          } finally {
+              explainButton.disabled = false;
+              explainButton.textContent = "Explain Code";
+          }
+      });
+
+      toggleButton.addEventListener("click", () => {
+          const explanation = buttonContainer.querySelector(".code-helper-explanation");
+          const isExpanded = toggleButton.getAttribute('data-expanded') === 'true';
+          
+          if (explanation) {
+              if (isExpanded) {
+                  explanation.style.display = "none";
+                  toggleButton.style.transform = "rotate(180deg)";
+                  toggleButton.setAttribute('data-expanded', 'false');
+              } else {
+                  explanation.style.display = "block";
+                  toggleButton.style.transform = "rotate(0deg)";
+                  toggleButton.setAttribute('data-expanded', 'true');
+              }
+          }
+      });
   });
 }
 
@@ -103,8 +132,8 @@ addExplainButtons();
 let observerTimeout;
 
 const observer = new MutationObserver(() => {
-  clearTimeout(observerTimeout); // Prevent multiple calls in quick succession
-  observerTimeout = setTimeout(addExplainButtons, 500); // ✅ Debounce execution (500ms delay)
+  clearTimeout(observerTimeout);
+  observerTimeout = setTimeout(addExplainButtons, 500);
 });
 
 observer.observe(document.body, {

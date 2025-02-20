@@ -3,32 +3,34 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Code Helper</title>
+  <title>codeGuide</title>
   <link rel="stylesheet" href="popup.css">
 </head>
 <body>
-  <h1>Code Helper</h1>
+  <h1>codeGuide</h1>
   
   <div class="container">
     <div class="field">
-      <label for="modelSelect">Select Model</label>
+      <label for="modelSelect">Model</label>
       <select id="modelSelect">
-        <option value="gpt-3.5-turbo">GPT-3.5</option>
+        <option value="deepseek-r1-distill-llama-70b">deepseek-r1-distill-llama-70b - Groq</option>
         <option value="gpt-4">GPT-4</option>
-        <option value="claude-3">Claude 3</option>
+        <option value="gpt-3.5">GPT-3.5</option>
+        <option value="claude-3-haiku">Claude 3 Haiku</option>
+        <option value="claude-3-sonnet">Claude 3 Sonnet</option>
       </select>
     </div>
     
     <div class="field">
       <label for="apiKey">API Key</label>
-      <input type="password" id="apiKey">
+      <input type="password" id="apiKey" placeholder="Enter your API key">
     </div>
     
     <button id="saveButton">Save Settings</button>
   </div>
 
   <footer>
-    <a href="#" target="_blank" class="github-link">GitHub Repository</a>
+    <a href="https://github.com/dineshram0212/codeguide" target="_blank" class="github-link">View on GitHub</a>
   </footer>
 
   <script src="popup.js"></script>
