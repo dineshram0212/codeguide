@@ -109,13 +109,13 @@ This project is licensed under the **MIT License**.
 ---
 
 **🚀 Try CodeGuide today and get AI-powered code explanations instantly!**
-```
 
 ---
 
-### **🔹 Key Updates in This Version**
+**🔹 Key Updates in This Version**
 ✅ **Mentioned that users can run the EXE file instead of setting up Python manually**.  
 ✅ **Kept the local vs. hosted API instructions**.  
 ✅ **Still clean and direct, no unnecessary sections**.  
 
 Now users **don’t need Python** if they use the EXE file! 🚀 Let me know if you need **further refinements**.
+```
