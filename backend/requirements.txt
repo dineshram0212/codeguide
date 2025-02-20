@@ -1,0 +1,8 @@
+fastapi
+uvicorn
+pydantic
+langchain
+langchain_groq
+langchain_anthropic
+langchain_openai
+motor
