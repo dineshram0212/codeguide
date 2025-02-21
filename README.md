@@ -1,5 +1,5 @@
 markdown
-# 🚀 CodeGuide - AI-Powered Code Explainer
+# 👨🏽‍💻CodeGuide - AI-Powered Code Explainer
 
 ## 📌 About
 CodeGuide is a **Chrome extension** that provides **AI-generated explanations** for code snippets on web pages using **FastAPI** and **LangChain**.
