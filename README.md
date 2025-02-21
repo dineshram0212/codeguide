@@ -1,4 +1,4 @@
-```markdown
+markdown
 # 🚀 CodeGuide - AI-Powered Code Explainer
 
 ## 📌 About
@@ -53,4 +53,3 @@ Then **reload the extension** in `chrome://extensions/`.
 ---
 
 **🚀 Try CodeGuide today and get AI-powered code explanations instantly!**
-```
