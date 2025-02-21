@@ -1,7 +1,7 @@
 // Listen for tab close event
 chrome.tabs.onRemoved.addListener((tabId) => {
     // Send request to backend to clear memory for this tab
-    fetch(`${API_BASE_URL}/clear_memory`, {
+    fetch(`${window.API_BASE_URL}/clear_memory`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ tab_id: tabId })
