@@ -39,7 +39,7 @@ Run the **provided EXE file** for an easy setup:
 ## 🔄 **Switching API Endpoints**
 Modify the API URL in **`config.js`** to switch between local and deployed servers:
 ```javascript
-const API_BASE_URL = "http://localhost:8000";  // Change to production if needed
+window.API_BASE_URL = "http://localhost:8000";  // Change to production if needed
 ```
 Then **reload the extension** in `chrome://extensions/`.
 
