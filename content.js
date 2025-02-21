@@ -1,3 +1,5 @@
+import { API_BASE_URL } from "./config.js"; 
+
 function formatExplanation(text) {
   // Replace headings
   text = text.replace(/^### (.*?)$/gm, "<h3>$1</h3>");
@@ -85,7 +87,7 @@ function addExplainButtons() {
         const tabId = response.tabId;
 
         try {
-          const apiResponse = await fetch("https://codeguide.onrender.com/explain", {
+          const apiResponse = await fetch(`${API_BASE_URL}/explain`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({

@@ -1,93 +1,51 @@
+```markdown
 # 🚀 CodeGuide - AI-Powered Code Explainer
 
 ## 📌 About
-CodeGuide is a **Chrome extension** that provides **AI-generated explanations** for code snippets found on web pages. It integrates with **FastAPI** and **LangChain** to process and explain code using Large Language Models (LLMs).
+CodeGuide is a **Chrome extension** that provides **AI-generated explanations** for code snippets on web pages using **FastAPI** and **LangChain**.
 
 ![CodeGuide Banner](images/codeGuide.png)
 
+---
 
 ## 🛠️ Installation Guide
 
-### **1️⃣ Setting Up the Chrome Extension**
+### **1️⃣ Download & Install**
 1. Clone the repository:
    ```bash
    git clone https://github.com/dineshram0212/codeguide.git
-   cd codeguide/extension
+   cd codeguide
    ```
-2. Open **Chrome** and navigate to:
+
+### **2️⃣ Running the Backend**
+Run the **provided EXE file** for an easy setup:
+1. Download `codeguide_backend.exe` from **Releases**.
+2. **Double-click to run** it.
+3. The backend will start at:
+   ```
+   http://localhost:8000
+   ```
+
+### **3️⃣ Load the Chrome Extension**
+1. Open **Chrome** and go to:
    ```
    chrome://extensions/
    ```
-3. Enable **Developer Mode** (top-right corner).
-4. Click **"Load Unpacked"** and select the `extension/` folder.
-5. Your extension is now installed!
+2. Enable **Developer Mode** (top-right corner).
+3. Click **"Load Unpacked"** and select the `extension/` folder.
 
 ---
 
-### **2️⃣ Running the Backend**
-You have **two options** for running the backend:
-
-### **Option 1: Run the Executable (Easiest)**
-If you don't want to set up Python, you can simply run the **provided EXE file**:
-
-1. Download the `codeguide_backend.exe` file from **Releases**.
-2. **Double-click to run it**. The backend will start automatically.
-3. The API will be available at:
-   ```
-   http://localhost:8000
-   ```
-
-### **Option 2: Run the Backend Manually (For Developers)**
-If you prefer setting up the backend yourself:
-
-1. Navigate to the backend folder:
-   ```bash
-   cd ../backend
-   ```
-2. Install dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
-3. Run the server:
-   ```bash
-   uvicorn main:app --host 0.0.0.0 --port 8000
-   ```
-4. The backend is now running at:
-   ```
-   http://localhost:8000
-   ```
+## 🔄 **Switching API Endpoints**
+Modify the API URL in **`config.js`** to switch between local and deployed servers:
+```javascript
+const API_BASE_URL = "http://localhost:8000";  // Change to production if needed
+```
+Then **reload the extension** in `chrome://extensions/`.
 
 ---
 
-## 🔄 **Switching Between Local and Deployed API**
-- By default, the extension **calls a hosted API** (if deployed).  
-- If you're running the backend **locally**, you need to update the extension's API endpoint:
-  1. Open **`popup.js`** and **`content.js`** inside `extension/`.
-  2. Find API calls (e.g., `fetch("https://your-api-url.com/explain")`).
-  3. Change it to:
-     ```javascript
-     fetch("http://localhost:8000/explain")
-     ```
-  4. Save the files and **reload the extension** in `chrome://extensions/`.
-
----
-
-## 🔑 API Key Configuration
-To use LLMs like **OpenAI**, **Groq**, or **Anthropic**, you need an API key.
-
-1. Open the Chrome extension popup
-2. Enter your **API key**
-3. Select the **AI model**
-4. Save settings
-
----
-
-## 📜 License
-This project is licensed under the **MIT License**.
-
----
-
-## 📧 Contact
+## 📧 Contact / Credits
 - **GitHub:** [dineshram0212](https://github.com/dineshram0212)
 - **Email:** [dineshramdsml@gmail.com]
 - **Website:** [https://dineshram.vercel.app/](https://dineshram.vercel.app/)
@@ -95,13 +53,4 @@ This project is licensed under the **MIT License**.
 ---
 
 **🚀 Try CodeGuide today and get AI-powered code explanations instantly!**
-
----
-
-**🔹 Key Updates in This Version**
-✅ **Mentioned that users can run the EXE file instead of setting up Python manually**.  
-✅ **Kept the local vs. hosted API instructions**.  
-✅ **Still clean and direct, no unnecessary sections**.  
-
-Now users **don’t need Python** if they use the EXE file! 🚀 Let me know if you need **further refinements**.
 ```
