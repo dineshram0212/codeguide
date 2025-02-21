@@ -19,7 +19,7 @@ CodeGuide is a **Chrome extension** that provides **AI-generated explanations** 
 
 ### **2️⃣ Running the Backend**
 Run the **provided EXE file** for an easy setup:
-1. Download `codeguide_backend.exe` from **Releases**.
+1. Download `codeguide_backend.exe` from **backend**.
 2. **Double-click to run** it.
 3. The backend will start at:
    ```
@@ -32,7 +32,7 @@ Run the **provided EXE file** for an easy setup:
    chrome://extensions/
    ```
 2. Enable **Developer Mode** (top-right corner).
-3. Click **"Load Unpacked"** and select the `extension/` folder.
+3. Click **"Load Unpacked"** and select the `codeguide/` folder.
 
 ---
 
